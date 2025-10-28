@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapas de Rutas desde la Entrada de la Universidad con Botones</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #mapa { height: 500px; width: 100%; }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        button { margin: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color: white; border: none; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>MapCSM</h1>
+    <p>Selecciona un destino para calcular la ruta:</p>
+    <button id="btnRectoria">Ir a Rectoría</button>
+    <button id="btnBiblioteca">Ir a Biblioteca José Coronel Urtecho</button>
+    <button id="btnAuditorio">Ir a Auditorio Neysi Ríos</button>
+    <button id="btnFoodPark">Ir a Food Park</button>
+    <button id="btnMuseo">Ir a Museo Héroes y Mártires de Nicaragua</button>
+    <button id="btnLimpiar">Limpiar Rutas</button>
+    
+    <div id="mapa"></div>
+    
+    <script>
+        // Inicializar el mapa
+        var mapa = L.map('mapa').setView([12.1276667, -86.2699722], 18);  // Centro en el nuevo inicio, zoom alto para detalle
+        var rutasLayer = L.layerGroup().addTo(mapa);
+        
+        // Agregar capa de tiles de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mapa);
+        
+        // Agregar marcador de inicio
+        var marcadorInicio = L.marker([12.1276667, -86.2699722]).addTo(mapa);
+        marcadorInicio.bindPopup('Entrada de la Universidad - Punto de inicio');
+        
+        // Agregar marcador de Rectoría
+        var marcadorRectoria = L.marker([12.1265556, -86.2695556]).addTo(mapa);
+        marcadorRectoria.bindPopup('Rectoría');
+        
+        // Agregar marcador de Biblioteca
+        var marcadorBiblioteca = L.marker([12.126222, -86.269944]).addTo(mapa);
+        marcadorBiblioteca.bindPopup('Biblioteca José Coronel Urtecho');
+        
+        // Agregar marcador de Auditorio
+        var marcadorAuditorio = L.marker([12.125861, -86.269944]).addTo(mapa);
+        marcadorAuditorio.bindPopup('Auditorio Neysi Ríos');
+        
+        // Agregar marcador de Food Park
+        var marcadorFoodPark = L.marker([12.125277, -86.271944]).addTo(mapa);
+        marcadorFoodPark.bindPopup('Adelante de usted se encuentra el Food Park');
+        
+        // Agregar marcador de Museo
+        var marcadorMuseo = L.marker([12.125222, -86.270833]).addTo(mapa);
+        marcadorMuseo.bindPopup('Enfrente de ti se encuentra el museo');
+        
+        // Función para dibujar ruta personalizada a Rectoría
+        function dibujarRutaRectoria() {
+            rutasLayer.clearLayers();
+            
+            var rutaCoords = [
+                [12.1276667, -86.2699722],  // Inicio
+                [12.1272778, -86.2699444],  // Punto 1
+                [12.1271944, -86.2701111],  // Punto 2
+                [12.1270278, -86.2700833],  // Punto 3
+                [12.1267778, -86.2700556],  // Punto 4
+                [12.1264722, -86.2700278],  // Punto 5
+                [12.1265, -86.27],           // Dobla
+                [12.1265278, -86.2697778],  // Sigue
+                [12.1265556, -86.2695556]   // Rectoría
+            ];
+            
+            var ruta = L.polyline(rutaCoords, {color: 'blue', weight: 5}).addTo(rutasLayer);
+            ruta.bindPopup('Ruta personalizada a Rectoría');
+            mapa.fitBounds(ruta.getBounds());
+        }
+        
+        // Función para dibujar ruta personalizada a Biblioteca
+        function dibujarRutaBiblioteca() {
+            rutasLayer.clearLayers();
+            
+            var rutaCoords = [
+                [12.1276667, -86.2699722],  // Inicio
+                [12.127611, -86.269944],    // Punto 1
+                [12.1275, -86.269888],      // Punto 2
+                [12.127333, -86.269916],    // Punto 3
+                [12.127194, -86.27011],     // Punto 4
+                [12.126722, -86.270055],    // Punto 5
+                [12.126222, -86.269972],    // Punto 6
+                [12.126222, -86.269944]     // Biblioteca
+            ];
+            
+            var ruta = L.polyline(rutaCoords, {color: 'blue', weight: 5}).addTo(rutasLayer);
+            ruta.bindPopup('Ruta personalizada a Biblioteca José Coronel Urtecho');
+            mapa.fitBounds(ruta.getBounds());
+        }
+        
+        // Función para dibujar ruta personalizada a Auditorio
+        function dibujarRutaAuditorio() {
+            rutasLayer.clearLayers();
+            
+            var rutaCoords = [
+                [12.1276667, -86.2699722],  // Inicio
+                [12.127611, -86.269944],    // Punto 1
+                [12.1275, -86.269888],      // Punto 2
+                [12.127333, -86.269916],    // Punto 3
+                [12.127194, -86.27011],     // Punto 4
+                [12.126722, -86.270055],    // Punto 5
+                [12.126222, -86.269972],    // Punto 6
+                [12.125888, -86.269944],    // Punto 7
+                [12.125861, -86.269944]     // Auditorio
+            ];
+            
+            var ruta = L.polyline(rutaCoords, {color: 'blue', weight: 5}).addTo(rutasLayer);
+            ruta.bindPopup('Ruta personalizada a Auditorio Neysi Ríos');
+            mapa.fitBounds(ruta.getBounds());
+        }
+        
+        // Función para dibujar ruta personalizada a Food Park
+        function dibujarRutaFoodPark() {
+            rutasLayer.clearLayers();
+            
+            var rutaCoords = [
+                [12.1276667, -86.2699722],  // Inicio
+                [12.127611, -86.269944],    // Punto 1
+                [12.1275, -86.269888],      // Punto 2
+                [12.127333, -86.269916],    // Punto 3
+                [12.127194, -86.27011],     // Punto 4
+                [12.126722, -86.270055],    // Punto 5
+                [12.126222, -86.269972],    // Punto 6
+                [12.125888, -86.269944],    // Punto 7
+                [12.125666, -86.269916],    // Punto 8
+                [12.125638, -86.269972],    // Dobla
+                [12.125638, -86.269972],    // Punto 9
+                [12.125555, -86.270388],    // Sigue
+                [12.125499, -86.270666],    // Punto 10
+                [12.125472, -86.270777],    // Punto 11
+                [12.125444, -86.270916],    // Punto 12
+                [12.125388, -86.271222],    // Punto 13
+                [12.125333, -86.271472],    // Punto 14
+                [12.125277, -86.271944]     // Food Park
+            ];
+            
+            var ruta = L.polyline(rutaCoords, {color: 'blue', weight: 5}).addTo(rutasLayer);
+            ruta.bindPopup('Ruta personalizada a Food Park');
+            mapa.fitBounds(ruta.getBounds());
+        }
+        
+        // Función para dibujar ruta personalizada a Museo
+        function dibujarRutaMuseo() {
+            rutasLayer.clearLayers();
+            
+            var rutaCoords = [
+                [12.1276667, -86.2699722],  // Inicio
+                [12.127611, -86.269944],    // Punto 1: 12°07'39.4"N 86°16'11.8"W
+                [12.1275, -86.269888],      // Punto 2: 12°07'39.0"N 86°16'11.6"W
+                [12.127333, -86.269916],    // Punto 3: 12°07'38.4"N 86°16'11.7"W
+                [12.127194, -86.27011],     // Punto 4: 12°07'37.9"N 86°16'12.4"W
+                [12.126722, -86.270055],    // Punto 5: 12°07'36.2"N 86°16'12.2"W
+                [12.126222, -86.269972],    // Punto 6: 12°07'34.4"N 86°16'11.9"W
+                [12.125888, -86.269944],    // Punto 7: 12°07'33.2"N 86°16'11.8"W
+                [12.125666, -86.269916],    // Punto 8: 12°07'32.4"N 86°16'11.7"W
+                [12.125638, -86.269972],    // Dobla: 12°07'32.3"N 86°16'11.9"W
+                [12.125638, -86.269972],    // Punto 9: 12°07'32.3"N 86°16'11.9"W
+                [12.125555, -86.270388],    // Sigue: 12°07'32.0"N 86°16'13.4"W
+                [12.125499, -86.270666],    // Punto 10: 12°07'31.8"N 86°16'14.4"W
+                [12.125472, -86.270777],    // Punto 11: 12°07'31.7"N 86°16'14.8"W
+                [12.125472, -86.270833],    // Punto 12: 12°07'31.7"N 86°16'15.0"W
+                [12.125333, -86.270833],    // Dobla: 12°07'31.2"N 86°16'15.0"W
+                [12.125222, -86.270833]     // Museo: 12°07'30.8"N 86°16'15.0"W
+            ];
+            
+            var ruta = L.polyline(rutaCoords, {color: 'blue', weight: 5}).addTo(rutasLayer);
+            ruta.bindPopup('Ruta personalizada a Museo Héroes y Mártires de Nicaragua');
+            mapa.fitBounds(ruta.getBounds());
+        }
+        
+        function limpiarRutas() {
+            rutasLayer.clearLayers();
+        }
+        
+        // Event listeners para botones
+        document.getElementById('btnRectoria').addEventListener('click', dibujarRutaRectoria);
+        document.getElementById('btnBiblioteca').addEventListener('click', dibujarRutaBiblioteca);
+        document.getElementById('btnAuditorio').addEventListener('click', dibujarRutaAuditorio);
+        document.getElementById('btnFoodPark').addEventListener('click', dibujarRutaFoodPark);
+        document.getElementById('btnMuseo').addEventListener('click', dibujarRutaMuseo);
+        document.getElementById('btnLimpiar').addEventListener('click', limpiarRutas);
+    </script>
+</body>
+</html>
+
+
+
+
