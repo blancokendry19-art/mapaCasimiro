@@ -11,17 +11,91 @@
         body { font-family: Arial, sans-serif; text-align: center; }
         button { margin: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color: white; border: none; }
         button:hover { background-color: #45a049; }
+        .hamburger {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        .hamburger div {
+            width: 100%;
+            height: 4px;
+            background-color: #333;
+            transition: all 0.3s;
+        }
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        .menu {
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            width: 250px;
+            height: auto;
+            background-color: #fff;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            padding: 20px;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .direction-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .direction-buttons button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .direction-buttons button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
+    <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    
+    <div class="menu" id="menu">
+        <h2>Menú de Rutas</h2>
+        <div class="direction-buttons">
+            <button id="btnRectoria">Ir a Rectoría</button>
+            <button id="btnBiblioteca">Ir a Biblioteca José Coronel Urtecho</button>
+            <button id="btnAuditorio">Ir a Auditorio Neysi Ríos</button>
+            <button id="btnFoodPark">Ir a Food Park</button>
+            <button id="btnMuseo">Ir a Museo Héroes y Mártires de Nicaragua</button>
+            <button id="btnLimpiar">Limpiar Rutas</button>
+        </div>
+    </div>
+
     <h1>MapCSM</h1>
     <p>Selecciona un destino para calcular la ruta:</p>
-    <button id="btnRectoria">Ir a Rectoría</button>
-    <button id="btnBiblioteca">Ir a Biblioteca José Coronel Urtecho</button>
-    <button id="btnAuditorio">Ir a Auditorio Neysi Ríos</button>
-    <button id="btnFoodPark">Ir a Food Park</button>
-    <button id="btnMuseo">Ir a Museo Héroes y Mártires de Nicaragua</button>
-    <button id="btnLimpiar">Limpiar Rutas</button>
     
     <div id="mapa"></div>
     
@@ -191,10 +265,15 @@
         document.getElementById('btnFoodPark').addEventListener('click', dibujarRutaFoodPark);
         document.getElementById('btnMuseo').addEventListener('click', dibujarRutaMuseo);
         document.getElementById('btnLimpiar').addEventListener('click', limpiarRutas);
+        
+        // Event listener para el menú de hamburguesa
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
     </script>
 </body>
 </html>
-
-
-
-
